@@ -1,0 +1,43 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <div id="searchResults"></div>
+
+    <hr>
+
+    <form id="myForm">
+        <input type="text" name="username" placeholder="Username">
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+    $(document).ready(function() {
+    // 1. Live Search Logic [cite: 11, 13]
+    $('#searchInput').keyup(function() {
+        var query = $(this).val();
+        $.ajax({
+            url: 'search.php',
+            method: 'GET',
+            data: { query: query },
+            success: function(response) {
+                $('#searchResults').html(response); // Update results div [cite: 18]
+            }
+        });
+    });
+
+    // 2. Form Submission Logic [cite: 32, 35]
+    $('#myForm').submit(function(event) {
+        event.preventDefault(); // Stop page refresh [cite: 33]
+        $.ajax({
+            url: 'submit.php',
+            method: 'POST',
+            data: $(this).serialize(), // Package form data [cite: 34]
+            success: function(response) {
+                alert("Data Submitted: " + response);
+            }
+        });
+    });
+});
+</script>
+</body>
