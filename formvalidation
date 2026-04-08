@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>User Registration</h2>
+    <form id="regForm">
+        <input type="text" id="username" placeholder="Username (5+ chars)"><br><br>
+        <input type="text" id="email" placeholder="Email"><br><br>
+        <input type="password" id="password" placeholder="Password (8+ chars, 1 number)"><br><br>
+        <input type="password" id="confirmPass" placeholder="Confirm Password"><br><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <p id="error" style="color: red;"></p>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page reload
+            
+            let user = document.getElementById('username').value;
+            let email = document.getElementById('email').value;
+            let pass = document.getElementById('password').value;
+            let confirm = document.getElementById('confirmPass').value;
+            let errorMsg = document.getElementById('error');
+
+            // 1. Username validation (at least 5 characters) 
+            if (user.length < 5) {
+                errorMsg.innerText = "Username must be at least 5 characters.";
+                return;
+            }
+
+            // 2. Email validation (basic format) 
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                errorMsg.innerText = "Please enter a valid email.";
+                return;
+            }
+
+            // 3. Password validation (8+ chars, must include a number) 
+            let hasNumber = /\d/;
+            if (pass.length < 8 || !hasNumber.test(pass)) {
+                errorMsg.innerText = "Password must be 8+ characters and include a number.";
+                return;
+            }
+
+            // 4. Confirm password match 
+            if (pass !== confirm) {
+                errorMsg.innerText = "Passwords do not match!";
+                return;
+            }
+
+            // Success 
+            errorMsg.style.color = "green";
+            errorMsg.innerText = "Registration Successful!";
+        });
+    </script>
+</body>
+</html>
