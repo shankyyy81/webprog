@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .highlight { background-color: yellow; }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="search" placeholder="Search articles...">
+    <ul id="articleList">
+        <li>JavaScript Basics</li>
+        <li>Learning jQuery for Beginners</li>
+        <li>Web Development Trends</li>
+        <li>How to Highlight Text</li>
+    </ul>
+
+    <script>
+        $(document).ready(function() {
+            $("#search").on("keyup", function() {
+                let value = $(this).val().toLowerCase();
+
+                $("#articleList li").each(function() {
+                    let text = $(this).text();
+                    
+                    if (text.toLowerCase().indexOf(value) > -1 && value !== "") {
+                        $(this).show();
+                        // Highlight matching text [cite: 22]
+                        let regex = new RegExp(`(${value})`, "gi");
+                        let newText = text.replace(regex, `<span class="highlight">$1</span>`);
+                        $(this).html(newText);
+                    } else {
+                        // Reset text and filter visibility 
+                        $(this).html(text); 
+                        $(this).toggle(text.toLowerCase().indexOf(value) > -1);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
