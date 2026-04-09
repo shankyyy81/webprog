@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Flash Sale!</h2>
+    <div id="timer" style="font-size: 24px; font-weight: bold;">05:00</div>
+    <br>
+    <button id="buyBtn">Buy Now</button>
+
+    <script>
+        $(document).ready(function() {
+            let totalSeconds = 5 * 60; // 5 minutes converted to seconds 
+
+            let countdown = setInterval(function() {
+                let minutes = Math.floor(totalSeconds / 60);
+                let seconds = totalSeconds % 60;
+
+                // Format: Add a leading zero if seconds < 10
+                let displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+                let displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+                $("#timer").text(displayMinutes + ":" + displaySeconds);
+
+                if (totalSeconds <= 0) {
+                    clearInterval(countdown); // Stop the timer
+                    $("#buyBtn").prop("disabled", true); // Disable the button [cite: 14, 16]
+                    $("#timer").text("00:00 - Deal Expired");
+                }
+
+                totalSeconds--;
+            }, 1000); // Run every 1 second
+        });
+    </script>
+
+</body>
+</html>
